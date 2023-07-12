@@ -7,25 +7,30 @@
             display: block;
             margin: 50px auto;
             width: 300px;
+            height: 400px;
+        }
+
+        .hourglass-path {
+            fill: #000;
         }
     </style>
 </head>
 <body>
     <svg class="hourglass-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200">
-        <path d="M10,0 L90,0 L50,100 Z" fill="#000" id="hourglass-shape"></path>
+        <path class="hourglass-path" d="M10,0 L90,0 L50,100 Z"></path>
     </svg>
 
     <script>
         function drawHourglass(hours, minutes) {
-            var hourglassShape = document.getElementById("hourglass-shape");
+            var hourglassPath = document.querySelector('.hourglass-path');
 
             // Calculate the percentage of time passed in the current hour
             var totalMinutes = hours * 60 + minutes;
             var percentage = (totalMinutes / 60) * 100;
 
             // Set the fill level of the hourglass shape
-            var fillLevel = 100 - Math.min(100, Math.max(0, percentage));
-            hourglassShape.style.fill = "hsl(0, 0%, " + fillLevel + "%)";
+            var fillLevel = Math.min(100, Math.max(0, percentage));
+            hourglassPath.style.transform = `translateY(${100 - fillLevel}%)`;
         }
 
         function getCurrentTime() {
